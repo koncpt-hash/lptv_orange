@@ -767,7 +767,7 @@ p { white-space: pre-wrap; }
   <div class="login-screen" id="login-screen" hidden>
     <div class="login-topbar"><img src="assets/content.svg" alt="Orange"></div>
     <div class="login-card-wrap">
-    <div class="login-card">
+    <div class="login-card" id="login-card">
       <h2>Zaloguj się i przejdź do Twoich spersonalizowanych ofert</h2>
 
       <div class="login-field">
@@ -794,6 +794,11 @@ p { white-space: pre-wrap; }
       <a class="btn btn-secondary" href="#">Wpisz numer Orange</a>
 
       <a class="login-back" href="#" onclick="closeLoginScreen(event)">Wróć</a>
+    </div>
+
+    <div class="pakiety-loader" id="login-loader" hidden>
+      <div class="loader-icon"></div>
+      <p>Daj nam chwilę - właśnie przygotowujemy oferty<br>tylko dla Ciebie!</p>
     </div>
     </div>
   </div>
@@ -1326,12 +1331,16 @@ function handleLogin(event) {
   event.preventDefault();
   var pakiety = document.getElementById('pakiety');
   var loginScreen = document.getElementById('login-screen');
-  var loader = document.getElementById('pakiety-loader');
-  loginScreen.hidden = true;
-  pakiety.hidden = true;
-  loader.hidden = false;
+  var loginCard = document.getElementById('login-card');
+  var loginLoader = document.getElementById('login-loader');
+
+  loginCard.hidden = true;
+  loginLoader.hidden = false;
+
   setTimeout(function () {
-    loader.hidden = true;
+    loginScreen.hidden = true;
+    loginLoader.hidden = true;
+    loginCard.hidden = false;
     pakiety.hidden = false;
   }, 2000);
 }
