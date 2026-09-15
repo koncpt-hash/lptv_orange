@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telewizja od Orange — Standalone 24ho</title>
+<style>
+/* ===== DESIGN TOKENS — Figma: fCjsqSTUlP1jfWpSZsdfc7 / node 6614-69891 ===== */
+:root {
+  --bg-bold-100:      #000000;
+  --bg-bold-90:       #232323;
+  --bg-bold-80:       #333333;
+  --bg-light-100:     #ffffff;
+  --bg-container:     #ffffff;
+  --bg-ghost:         #f5f5f5;
+  --bg-inactive:      #cccccc;
+  --bg-brand:         #f15e00;
+
+  --text-active:          #f15e00;
+  --text-light:           #ffffff;
+  --text-bold-inverse:    #ffffff;
+  --text-bold-default:    #232323;
+  --text-bold:            #232323;
+  --text-bold-light:      #444444;
+  --text-bold-light-inv:  #dddddd;
+  --text-placeholder:     #cccccc;
+  --text-label:           #666666;
+
+  --border-divider:   #eeeeee;
+  --border-active:    #f15e00;
+  --border-input:     #cccccc;
+  --border-bold:      #232323;
+
+  --rounded-small:    4px;
+  --rounded-standard: 8px;
+  --rounded-full:     999px;
+
+  --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --fs-xs: 12px;   --lh-xs: 18px;
+  --fs-sm: 14px;   --lh-sm: 20px;
+  --fs-base: 16px; --lh-base: 22px;
+  --fs-md: 18px;   --lh-md: 24px;
+  --fs-lg: 20px;   --lh-lg: 26px;
+  --fs-xl: 24px;   --lh-xl: 28px;
+  --fs-2xl: 30px;  --lh-2xl: 34px;
+  --fs-3xl: 34px;  --lh-3xl: 38px;
+  --fs-5xl: 50px;  --lh-5xl: 54px;
+
+  --sp1: 4px; --sp1-5: 6px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+  --sp5: 20px; --sp6: 24px; --sp8: 32px; --sp10: 40px; --sp20: 80px;
+
+  --shadow-elevated: 0 0 8px rgba(0,0,0,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-light-100);
+  color: var(--text-bold-default);
+  min-width: 1440px;
+}
+
+img { display: block; max-width: none; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; border: none; background: none; cursor: pointer; }
+p { white-space: pre-wrap; }
+
+.page { display: flex; flex-direction: column; align-items: center; width: 100%; }
+
+/* ===================== MENU ===================== */
+.menu { position: relative; width: 1440px; z-index: 2; }
+
+.menu-upper {
+  background: var(--bg-bold-80);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+}
+.markets { display: flex; align-items: center; height: 50px; }
+.market {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  background: var(--bg-bold-80);
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-xs);
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.market.active { background: var(--bg-bold-100); color: var(--text-active); }
+
+.menu-upper-right { display: flex; align-items: center; height: 100%; }
+.menu-item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  height: 50px;
+  padding: 8px;
+  background: var(--bg-bold-80);
+}
+.menu-item .icon { width: 20px; height: 20px; }
+.menu-item span {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--text-bold-inverse);
+  white-space: nowrap;
+}
+.btn-login-wrap {
+  height: 50px;
+  width: 149px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px;
+  background: var(--bg-bold-80);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--rounded-small);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-primary-small { background: var(--bg-brand); color: var(--text-light); padding: 6px 16px; height: 34px; }
+.btn-primary { background: var(--bg-brand); color: var(--text-light); padding: 12px 24px; width: 100%; }
+.btn-secondary { background: var(--bg-bold-100); color: var(--text-light); border: 2px solid var(--bg-bold-100); padding: 10px 24px; width: 100%; }
+.btn-tertiary { background: transparent; color: var(--text-bold-default); text-decoration: underline; padding: 6px 8px; }
+.btn-tertiary.on-dark { color: var(--text-bold-inverse); }
+
+.menu-lower {
+  background: var(--bg-bold-100);
+  width: 1440px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+  position: relative;
+  z-index: 1;
+}
+.services { display: flex; align-items: center; }
+.logo-market { display: flex; align-items: center; height: 100%; padding-right: 16px; }
+.logo-market img { width: 40px; height: 40px; }
+
+.service {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 82px;
+  padding: 16px;
+}
+.service .sticker {
+  display: inline-block;
+  background: var(--bg-brand);
+  color: var(--text-light);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.uslugi { display: flex; gap: 2px; align-items: center; height: 20px; }
+.uslugi span { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-light); white-space: nowrap; }
+.uslugi img { width: 20px; height: 20px; }
+
+.right-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  border-left: 1px solid var(--bg-bold-80);
+  border-right: 1px solid var(--bg-bold-80);
+}
+.custom-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  padding: 0 20px;
+}
+.custom-item .icon { width: 20px; height: 20px; color: var(--text-light); }
+.custom-item img.cart { width: 30px; height: 24px; }
+.custom-item span { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-light); text-align: center; white-space: nowrap; }
+
+.flag-badge {
+  position: absolute;
+  right: 0;
+  top: 144px;
+  width: 75px;
+  height: 52px;
+  background: var(--bg-light-100);
+  box-shadow: var(--shadow-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flag-badge img { width: 44px; height: 28px; }
+
+/* ===================== HERO / BANNER ===================== */
+.banner-container {
+  position: relative;
+  width: 1440px;
+  background: var(--bg-bold-100);
+  padding-bottom: 24px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  width: 100%;
+  height: 520px;
+  z-index: 0;
+  background: #000 url("assets/getty-hero.png") center 20% / cover no-repeat;
+}
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 75%);
+}
+.banner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 40px 104px 0;
+}
+.content-holder-outer { display: flex; flex-direction: column; align-items: center; }
+.content-holder {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  min-height: 250px;
+  padding: 20px 0;
+  width: 1232px;
+}
+.hero-text { flex: 1; padding: 24px 0; }
+.hero-text h1 {
+  font-weight: 700;
+  font-size: var(--fs-5xl);
+  line-height: var(--lh-5xl);
+  color: var(--text-light);
+  text-align: center;
+}
+.hero-image-holder { width: 498px; height: 438px; }
+
+.login-box-wrap { margin-top: -48px; width: 1232px; }
+.login-box {
+  background: var(--bg-container);
+  box-shadow: var(--shadow-elevated);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 32px;
+  border-radius: var(--rounded-standard);
+  width: 100%;
+}
+.login-box .copy { flex: 1; font-size: var(--fs-sm); color: var(--text-bold-default); }
+.login-box .copy b { display: block; font-weight: 700; line-height: var(--lh-sm); }
+.login-box .copy .sub { font-weight: 500; line-height: var(--lh-sm); color: var(--text-bold-light); }
+
+/* ===================== PAKIETY TV ===================== */
+.pakiety {
+  width: 100%;
+  padding: 24px 104px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.pakiety-header { text-align: center; width: 100%; }
+.pakiety-header h2 {
+  font-family: "Helvetica Neue";
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-2xl);
+}
+.pakiety-header p {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-sm);
+  color: var(--text-bold-light);
+}
+
+.toggle-bar {
+  background: var(--bg-ghost);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--rounded-small);
+  width: 400px;
+  cursor: pointer;
+}
+.toggle-bar .text-holder { flex: 1; text-align: left; }
+.toggle-bar .label { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
+.toggle-bar .details { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-decoration: underline; }
+.switch { width: 48px; height: 28px; padding: 2px; border-radius: 24px; background: var(--bg-inactive); box-shadow: 0 0 0 rgba(241,94,0,0.2); display: flex; align-items: center; }
+.switch .knob { width: 24px; height: 24px; border-radius: 40px; background: var(--bg-light-100); }
+
+.czas { width: 100%; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.czas > h3 { width: 100%; text-align: center; font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); }
+.czas-options { width: 100%; display: flex; gap: 16px; align-items: flex-start; justify-content: center; }
+.option-radio {
+  width: 296px;
+  background: var(--bg-container);
+  border: 2px solid var(--border-input);
+  border-radius: var(--rounded-standard);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.option-radio span { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); white-space: nowrap; }
+.option-radio.selected { border-color: var(--border-active); }
+
+.dish-holder { width: 100%; display: flex; gap: 16px; align-items: flex-start; justify-content: center; padding-top: 0; }
+.offer-dish {
+  width: 400px;
+  max-width: 400px;
+  min-width: 296px;
+  background: var(--bg-container);
+  border: 2px solid var(--border-divider);
+  border-radius: var(--rounded-standard);
+  padding: 32px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.offer-element { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.offer-element .kicker { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); }
+.offer-element .title { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold); }
+.logo-holder-dish { display: flex; align-items: center; justify-content: center; height: 36px; width: 130px; padding: 4px 0; }
+.logo-holder-dish img { width: 108px; height: 22px; }
+
+.price-holder { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.price-line { display: flex; align-items: baseline; gap: 4px; justify-content: center; }
+.price-line .amount { font-weight: 700; font-size: var(--fs-3xl); line-height: var(--lh-3xl); color: var(--text-active); }
+.price-line .unit { font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-md); color: var(--text-bold-light); }
+.price-desc { font-weight: 700; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-bold-light); text-align: center; }
+
+.actions { display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 8px 0; width: 100%; }
+
+.feature-list { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; width: 100%; }
+.feature-list > .lead { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-label); }
+.offer-feature { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.feature-item { display: flex; gap: 4px; align-items: center; width: 100%; }
+.dot-holder { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; padding: 6px; }
+.dot { width: 6px; height: 6px; border-radius: var(--rounded-full); background: var(--bg-brand); }
+.feature-item p { flex: 1; font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold); }
+.feature-item .btn-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-ghost); border: 2px solid var(--bg-ghost); border-radius: var(--rounded-small);
+}
+.feature-item .btn-icon img { width: 20px; height: 20px; }
+.feature-divider { height: 2px; background: var(--border-divider); width: 100%; }
+
+/* ===================== WHY ORANGE ===================== */
+.why-orange-section {
+  width: 1440px;
+  background: var(--bg-bold-100);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 40px 104px 20px;
+}
+.why-orange-list { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; width: 100%; }
+
+.why-orange-hero {
+  width: 1232px;
+  height: 390px;
+  border: 2px solid var(--border-bold);
+  border-radius: var(--rounded-standard);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.why-orange-hero-bg {
+  position: absolute; inset: -2px -2px -2px 0;
+  background: var(--bg-bold-90) url("assets/funbox.png") right 30% / cover no-repeat;
+}
+.why-orange-hero-bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 65% 45%, transparent 45%, rgba(0,0,0,0.85) 100%);
+}
+.why-orange-hero .item-holder {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 40px 0 40px 32px;
+  max-width: 560px;
+}
+.why-orange-hero h3 {
+  font-weight: 700;
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-3xl);
+  color: var(--text-bold-inverse);
+}
+.bullets { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; width: 100%; }
+.bullet-line { display: flex; gap: 8px; align-items: flex-start; width: 100%; }
+.bullet-holder { display: flex; height: 20px; align-items: flex-start; padding-top: 6px; }
+.bullet { width: 8px; height: 8px; border-radius: 4px; background: var(--bg-brand); flex-shrink: 0; }
+.bullet-line p { flex: 1; font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-inverse); }
+
+.why-orange-row { width: 100%; display: flex; align-items: center; }
+.why-orange-cards { flex: 1; display: flex; gap: 16px; align-items: center; }
+.why-orange-card {
+  flex: 1;
+  height: 256px;
+  min-height: 256px;
+  border: 2px solid var(--border-bold);
+  border-radius: var(--rounded-standard);
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-bold-90);
+  display: flex;
+  align-items: center;
+}
+.why-orange-card.card-1 { background: var(--bg-bold-90) url("assets/image352.png") right -20% / cover no-repeat; }
+.why-orange-card.card-2 { background: var(--bg-bold-90); }
+.why-orange-card.card-2 .card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.why-orange-card.card-2::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, #261810 30%, rgba(38,24,16,0) 78.8%);
+  z-index: 1;
+}
+.why-orange-card.card-3 { background: var(--bg-bold-90); }
+.why-orange-card.card-3 .card-img { position: absolute; right: -30px; top: -8px; width: 403px; height: 271px; object-fit: cover; }
+
+.why-orange-card .item-holder {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 0 16px 16px;
+}
+.why-orange-card h4 {
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-lg);
+  color: var(--text-bold-inverse);
+}
+.why-orange-card .subtitle {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-sm);
+  color: var(--text-bold-light-inv);
+}
+
+/* ===================== ARTICLES ===================== */
+.articles-section {
+  width: 100%;
+  background: var(--bg-light-100);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  padding-inline: 208px;
+}
+.card-header { width: 100%; padding-inline: 20px; display: flex; flex-direction: column; align-items: center; }
+.card-header-inner { width: 100%; display: flex; gap: 24px; align-items: flex-start; padding-bottom: 16px; }
+.card-header h2 { flex: 1; font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); text-align: center; }
+.divider-full { width: 100%; height: 2px; background: var(--border-divider); }
+
+.banner-cards { width: 100%; display: flex; gap: 8px; align-items: flex-start; justify-content: center; padding-inline: 8px; }
+.banner-card {
+  width: 300px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--rounded-standard);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.banner-card .thumb { width: 100%; height: 160px; background: linear-gradient(135deg,#333,#111); position: relative; }
+.banner-card .thumb .sticker {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--bg-brand); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 3px; text-transform: uppercase;
+}
+.banner-card .body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.banner-card h3 { font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); }
+.banner-card p { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); }
+
+/* ===================== FAQ ===================== */
+.faq {
+  width: 100%;
+  background: var(--bg-light-100);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  padding: 80px 208px 32px;
+}
+.faq > h2 { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); text-align: center; width: 100%; }
+.faq-content { width: 100%; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+.faq-list { width: 100%; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.faq-item { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.faq-line { width: 100%; display: flex; gap: 16px; align-items: center; cursor: pointer; }
+.faq-line p { flex: 1; font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); }
+.faq-toggle {
+  background: var(--bg-ghost);
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px; border-radius: var(--rounded-small);
+}
+.faq-toggle .icon-holder { display: flex; align-items: center; justify-content: center; padding: 8px; width: 20px; height: 20px; }
+.faq-toggle img { width: 20px; height: 20px; }
+
+/* ===================== FOOTER ===================== */
+.footer {
+  width: 100%;
+  background: var(--bg-bold-100);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  padding: 0 100px;
+  overflow: hidden;
+}
+.footer-section { width: 100%; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding-top: 20px; padding-inline: 20px; }
+.footer-links { display: flex; align-items: flex-start; flex-wrap: wrap; }
+.nav-links { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; padding: 10px 20px 10px 0; white-space: nowrap; }
+.nav-links .head { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-inverse); }
+.nav-links .item { font-weight: 500; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-placeholder); }
+
+.footer-section-mid { width: 100%; display: flex; flex-direction: column; gap: 16px; align-items: center; padding-inline: 20px; }
+.divider-dark { background: var(--bg-bold-90); height: 2px; width: 1240px; }
+.footer-row { width: 100%; display: flex; align-items: center; }
+.footer-quicklinks { flex: 1; display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; }
+.footer-link { display: flex; gap: 15px; align-items: center; }
+.footer-link .icon { width: 24px; height: 24px; color: var(--text-bold-inverse); }
+.footer-link span { font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); color: var(--text-bold-inverse); white-space: nowrap; }
+
+.socials { display: flex; gap: 16px; align-items: flex-start; justify-content: flex-end; }
+.social-circle {
+  width: 40px; height: 40px; border-radius: 90px;
+  border: 2px solid var(--text-bold-inverse);
+  display: flex; align-items: center; justify-content: center;
+}
+.social-circle img, .social-circle .icon { width: 24px; height: 24px; color: var(--text-bold-inverse); }
+
+.footer-bottom { width: 100%; display: flex; flex-direction: column; gap: 32px; align-items: flex-start; padding: 0 20px 20px; }
+.legal-links { width: 100%; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+.legal-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.legal-item { font-weight: 500; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-placeholder); white-space: nowrap; padding-bottom: 6px; }
+.legal-sep { width: 1px; height: 15px; background: var(--bg-bold-90); }
+.copyright { font-weight: 500; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-placeholder); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MENU -->
+  <div class="menu">
+    <div class="menu-upper">
+      <div class="markets">
+        <div class="market active">Klienci indywidualni</div>
+        <div class="market">Firmy</div>
+        <div class="market">Duże firmy i instytucje</div>
+      </div>
+      <div class="menu-upper-right">
+        <div class="menu-item">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="5" r="2"/><path d="M12 8v6M12 14l-4 6M12 14l4 6M6 11h12"/></svg>
+          <span>Bez barier</span>
+        </div>
+        <div class="btn-login-wrap">
+          <a class="btn btn-primary-small" href="#">Zaloguj się</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-lower">
+      <div class="services">
+        <div class="logo-market">
+          <img src="assets/content.svg" alt="Orange">
+        </div>
+        <div class="service">
+          <span class="sticker">Lorem</span>
+          <div class="uslugi"><span>Usługi komórkowe</span><img src="assets/arrow-down.svg" alt=""></div>
+        </div>
+        <div class="service"><div class="uslugi"><span>Internet</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        <div class="service"><div class="uslugi"><span>Telewizja</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        <div class="service"><div class="uslugi"><span>Smartfony i urządzenia</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        <div class="service"><div class="uslugi"><span>Usługi i rozwiązania</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        <div class="service"><div class="uslugi"><span>Pomoc i kontakt</span><img src="assets/arrow-down.svg" alt=""></div></div>
+      </div>
+      <div class="right-side">
+        <div class="custom-item">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <span>Szukaj</span>
+        </div>
+        <div class="custom-item">
+          <img class="cart" src="assets/koszyk.svg" alt="Koszyk">
+          <span>Koszyk</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flag-badge"><img src="assets/due.svg" alt="DUE"></div>
+  </div>
+
+  <!-- HERO / BANNER -->
+  <div class="banner-container">
+    <div class="hero-bg"></div>
+    <div class="banner">
+      <div class="content-holder-outer">
+        <div class="content-holder">
+          <div class="hero-text">
+            <h1>Telewizja z 173 kanałami<br>z Amazon Prime w prezencie</h1>
+          </div>
+          <div class="hero-image-holder"></div>
+        </div>
+      </div>
+      <div style="height:8px;"></div>
+      <div class="login-box-wrap">
+        <div class="login-box">
+          <div class="copy">
+            <b>Masz już u nas abonament komórkowy albo internet mobilny?</b>
+            <span class="sub">Zaloguj się i zobacz ceny przygotowane dla Ciebie</span>
+          </div>
+          <a class="btn btn-tertiary" href="#">Zaloguj się</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAKIETY TV -->
+  <div class="pakiety">
+    <div class="pakiety-header">
+      <h2>Pakiety TV</h2>
+      <p>Wybierz pakiet dopasowany do Twoich potrzeb</p>
+    </div>
+
+    <div class="toggle-bar">
+      <div class="text-holder">
+        <div class="label">Światłowód</div>
+        <div class="details">Szczegóły</div>
+      </div>
+      <div class="switch"><div class="knob"></div></div>
+    </div>
+
+    <div class="czas">
+      <h3>Czas trwania umowy</h3>
+      <div class="czas-options">
+        <div class="option-radio selected"><span>24 miesiące</span></div>
+        <a class="option-radio" href="#"><span>Bezterminowo</span></a>
+      </div>
+    </div>
+
+    <div class="dish-holder">
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Extra TV z Amazon Prime</div>
+          <div class="title">179 kanałów</div>
+          <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">60</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+          <div class="price-desc">przez pierwsze 6 miesięcy, potem zgodnie z cennikiem</div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Zamówienie</a>
+          <a class="btn btn-secondary" href="#">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="lead">Lorem ipsum:</div>
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Lorem ipsum</p>
+              <div class="btn-icon"><img src="assets/icon-dot.svg" alt=""></div>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY ORANGE -->
+  <div class="why-orange-section">
+    <div class="why-orange-list">
+      <div class="why-orange-hero">
+        <div class="why-orange-hero-bg"></div>
+        <div class="item-holder">
+          <h3>Telewizja Standalone</h3>
+          <div class="bullets">
+            <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Nawet 179 kanałów TV w pakiecie Orange, w tym Amazon Prime i Eleven Sports</p></div>
+            <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Kultowe seriale, hity filmowe i premiery prosto z kina dostępne w Amazon Prime, HBO, CANAL+ i Netflixie</p></div>
+            <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Jeszcze więcej sportu w jakości HD w Polsat Sport Premium</p></div>
+          </div>
+          <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+        </div>
+      </div>
+
+      <div class="why-orange-row">
+        <div class="why-orange-cards">
+          <div class="why-orange-card card-1">
+            <div class="item-holder">
+              <h4>Kino i sport na najwyższym poziomie. Teraz w pakiecie z ofertą telewizyjną.</h4>
+              <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+            </div>
+          </div>
+          <div class="why-orange-card card-2">
+            <img class="card-img" src="assets/image351.png" alt="">
+            <div class="item-holder">
+              <h4>Poznaj telewizję od Orange – nawet 179 kanałów TV i wiele więcej</h4>
+              <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+            </div>
+          </div>
+          <div class="why-orange-card card-3">
+            <img class="card-img" src="assets/rectangle1.png" alt="">
+            <div class="item-holder">
+              <h4>Masz pytania do oferty?</h4>
+              <div class="subtitle">Połącz się z konsultantem!</div>
+              <a class="btn btn-tertiary on-dark" href="#">Zamów rozmowę</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLES -->
+  <div class="articles-section">
+    <div class="card-header">
+      <div class="card-header-inner">
+        <h2>Twoja telewizja, twoja moc</h2>
+      </div>
+      <div class="divider-full"></div>
+    </div>
+    <div class="banner-cards">
+      <div class="banner-card">
+        <div class="thumb"><span class="sticker">Poradnik</span></div>
+        <div class="body">
+          <h3>Jak działa telewizja w Orange?</h3>
+          <p>Streaming, który nadąża za Tobą</p>
+          <a class="btn btn-tertiary" href="#">Sprawdź</a>
+        </div>
+      </div>
+      <div class="banner-card">
+        <div class="thumb"><span class="sticker">Poradnik</span></div>
+        <div class="body">
+          <h3>Kanały w Telewizji od Orange: jakie programy obejrzysz?</h3>
+          <p>Streaming, który nadąża za Tobą</p>
+          <a class="btn btn-tertiary" href="#">Sprawdź</a>
+        </div>
+      </div>
+      <div class="banner-card">
+        <div class="thumb"><span class="sticker">Poradnik</span></div>
+        <div class="body">
+          <h3>Jakie pakiety z telewizją znajdziesz w 2026 roku?</h3>
+          <p>Streaming, który nadąża za Tobą</p>
+          <a class="btn btn-tertiary" href="#">Sprawdź</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <h2>Najczęstsze pytania o Telewizję od Orange: od ceny do listy kanałów</h2>
+    <div class="faq-content">
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-line">
+            <p>Czy do instalacji telewizji Orange potrzebuję specjalnego kabla?</p>
+            <div class="faq-toggle"><div class="icon-holder"><img src="assets/arrow-down.svg" alt=""></div></div>
+          </div>
+        </div>
+        <div class="divider-full"></div>
+        <div class="faq-item">
+          <div class="faq-line">
+            <p>Czy mogę oglądać telewizję Orange na kilku telewizorach jednocześnie?</p>
+            <div class="faq-toggle"><div class="icon-holder"><img src="assets/arrow-down.svg" alt=""></div></div>
+          </div>
+        </div>
+        <div class="divider-full"></div>
+        <div class="faq-item">
+          <div class="faq-line">
+            <p>Czy potrzebuję telewizora typu Smart TV, aby korzystać z telewizji Orange?</p>
+            <div class="faq-toggle"><div class="icon-holder"><img src="assets/arrow-down.svg" alt=""></div></div>
+          </div>
+        </div>
+        <div class="divider-full"></div>
+        <div class="faq-item">
+          <div class="faq-line">
+            <p>Co to jest TV Standalone?</p>
+            <div class="faq-toggle"><div class="icon-holder"><img src="assets/arrow-down.svg" alt=""></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="btn btn-tertiary" href="#">Pokaż więcej</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-section">
+      <div class="footer-links">
+        <div class="nav-links">
+          <div class="head">Oferta</div>
+          <div class="item">Przedłuż umowę</div>
+          <div class="item">Przenieś numer</div>
+          <div class="item">Internet</div>
+          <div class="item">Orange Flex</div>
+          <div class="item">Offers for foreigners</div>
+        </div>
+        <div class="nav-links">
+          <div class="head">Na skróty</div>
+          <div class="item">Regulaminy i cenniki</div>
+          <div class="item">Roaming i połączenia międzynarodowe</div>
+          <div class="item">Poradnik Orange</div>
+          <div class="item">Status urządzenia na raty</div>
+        </div>
+        <div class="nav-links">
+          <div class="head">Serwisy</div>
+          <div class="item">Dla inwestorów</div>
+          <div class="item">Dla operatorów</div>
+          <div class="item">Dla dostawców</div>
+          <div class="item">Dla mediów</div>
+          <div class="item">Dla seniora</div>
+        </div>
+        <div class="nav-links">
+          <div class="head">O firmie</div>
+          <div class="item">O nas</div>
+          <div class="item">Kariera</div>
+          <div class="item">Znajdź salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-section-mid">
+      <div class="divider-dark"></div>
+      <div class="footer-row">
+        <div class="footer-quicklinks">
+          <div class="footer-link">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Chcę kupić - oddzwońcie</span>
+          </div>
+          <div class="footer-link">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+            <span>Sprawdź mapę zasięgu</span>
+          </div>
+          <div class="footer-link">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Kontakt</span>
+          </div>
+          <div class="footer-link" style="flex:1;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Etyka i Compilance</span>
+          </div>
+        </div>
+        <div class="socials">
+          <div class="social-circle"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div class="social-circle"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+          <div class="social-circle"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="social-circle"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <div class="social-circle"><img src="assets/twitter.svg" alt="X"></div>
+        </div>
+      </div>
+      <div class="divider-dark"></div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="legal-links">
+        <div class="legal-row">
+          <span class="legal-item">Ważne komunikaty</span><div class="legal-sep"></div>
+          <span class="legal-item">Regulamin serwisu</span><div class="legal-sep"></div>
+          <span class="legal-item">Warunki zakupów</span><div class="legal-sep"></div>
+          <span class="legal-item">Ochrona danych osobowych</span><div class="legal-sep"></div>
+          <span class="legal-item">Polityka prywatności</span><div class="legal-sep"></div>
+          <span class="legal-item">Zgłoś niebezpieczne treści</span><div class="legal-sep"></div>
+          <span class="legal-item">Sieć#1</span><div class="legal-sep"></div>
+          <span class="legal-item">Inwestycje dofinansowane z UE</span><div class="legal-sep"></div>
+          <span class="legal-item">Nieruchomości Orange</span>
+        </div>
+        <div class="legal-row">
+          <span class="legal-item">Multibox</span><div class="legal-sep"></div>
+          <span class="legal-item">Odpowiedzialny biznes</span><div class="legal-sep"></div>
+          <span class="legal-item">Fundacja Orange</span><div class="legal-sep"></div>
+          <span class="legal-item">Telefon domowy</span><div class="legal-sep"></div>
+          <span class="legal-item">Dbam o bliskich</span><div class="legal-sep"></div>
+          <span class="legal-item">Razem dla planety</span><div class="legal-sep"></div>
+          <span class="legal-item">Razem w sieci</span><div class="legal-sep"></div>
+          <span class="legal-item">Program Re</span><div class="legal-sep"></div>
+          <span class="legal-item">Tłumacz języka migowego</span><div class="legal-sep"></div>
+          <span class="legal-item">Confort+</span>
+        </div>
+      </div>
+      <p class="copyright">© 2026 Orange Polska S.A. Wszystkie prawa zastrzeżone.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
