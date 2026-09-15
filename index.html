@@ -297,8 +297,10 @@ p { white-space: pre-wrap; }
 .toggle-bar .text-holder { flex: 1; text-align: left; }
 .toggle-bar .label { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
 .toggle-bar .details { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-decoration: underline; }
-.switch { width: 48px; height: 28px; padding: 2px; border-radius: 24px; background: var(--bg-inactive); box-shadow: 0 0 0 rgba(241,94,0,0.2); display: flex; align-items: center; }
-.switch .knob { width: 24px; height: 24px; border-radius: 40px; background: var(--bg-light-100); }
+.toggle-bar { cursor: pointer; }
+.switch { width: 48px; height: 28px; padding: 2px; border-radius: 24px; background: var(--bg-inactive); box-shadow: 0 0 0 rgba(241,94,0,0.2); display: flex; align-items: center; cursor: pointer; transition: background 0.15s ease; }
+.switch .knob { width: 24px; height: 24px; border-radius: 40px; background: var(--bg-light-100); transition: transform 0.15s ease; }
+.switch.on { background: #2E7D32; justify-content: flex-end; }
 
 .czas { width: 100%; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
 .czas > h3 { width: 100%; text-align: center; font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); }
@@ -359,6 +361,49 @@ p { white-space: pre-wrap; }
 }
 .feature-item .btn-icon img { width: 20px; height: 20px; }
 .feature-divider { height: 2px; background: var(--border-divider); width: 100%; }
+
+/* ===================== FBB (fiber) BUNDLE CARDS ===================== */
+.fbb-holder { width: 100%; display: flex; gap: 16px; align-items: flex-start; justify-content: center; }
+.fbb-holder[hidden] { display: none; }
+.fbb-card {
+  flex: 1;
+  max-width: 400px;
+  min-width: 0;
+  position: relative;
+  background: var(--bg-container);
+  border: 2px solid var(--border-input);
+  border-radius: var(--rounded-standard);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fbb-card.superoferta { border-color: var(--bg-bold-80); }
+.fbb-sticker {
+  position: absolute;
+  left: -2px; right: -2px; top: -34px;
+  background: var(--bg-bold-80);
+  border-radius: var(--rounded-standard) var(--rounded-standard) 0 0;
+  padding: 8px 8px 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fbb-sticker span { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-light); }
+.fbb-text-holder { display: flex; flex-direction: column; gap: 2px; align-items: center; width: 100%; }
+.fbb-offer { display: flex; flex-direction: column; gap: 2px; align-items: center; width: 100%; text-align: center; }
+.fbb-offer .kicker { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); }
+.fbb-offer .title { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold-default); }
+.fbb-plus { width: 8px; height: 10px; margin: 6px 0; }
+.fbb-price-info { width: 100%; display: flex; flex-direction: column; gap: 6px; align-items: center; margin-top: 20px; }
+.fbb-price-row { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; }
+.fbb-price-line { display: flex; align-items: baseline; gap: 4px; }
+.fbb-price-line .from { font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-md); color: var(--text-bold-light); }
+.fbb-price-line .amount { font-weight: 700; font-size: var(--fs-3xl); line-height: var(--lh-3xl); color: var(--text-active); }
+.fbb-price-line .unit { font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-md); color: var(--text-bold-light); }
+.fbb-price-note { font-weight: 700; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-bold-light); }
+.fbb-divider { height: 2px; background: var(--border-divider); width: 230px; margin: 6px 0; }
+.fbb-card .btn-primary { margin-top: 12px; }
 
 /* ===================== WHY ORANGE ===================== */
 .why-orange-section {
@@ -641,14 +686,15 @@ p { white-space: pre-wrap; }
       <p>Wybierz pakiet dopasowany do Twoich potrzeb</p>
     </div>
 
-    <div class="toggle-bar">
+    <div class="toggle-bar" onclick="toggleFiber(event)">
       <div class="text-holder">
         <div class="label">Światłowód</div>
         <div class="details">Szczegóły</div>
       </div>
-      <div class="switch"><div class="knob"></div></div>
+      <div class="switch" id="fiber-switch"><div class="knob"></div></div>
     </div>
 
+    <div id="standard-offers">
     <div class="czas">
       <h3>Czas trwania umowy</h3>
       <div class="czas-options">
@@ -781,6 +827,118 @@ p { white-space: pre-wrap; }
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="fbb-holder" id="fiber-offers" hidden>
+      <div class="fbb-card">
+        <div class="fbb-text-holder">
+          <div class="fbb-offer">
+            <div class="kicker">Extra TV z Amazon Prime</div>
+            <div class="title">230 kanałów</div>
+            <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+          </div>
+          <img class="fbb-plus" src="assets/icon-plus.svg" alt="+">
+          <div class="fbb-offer">
+            <div class="kicker">Światłowód</div>
+            <div class="title">do 300 Mb/s</div>
+          </div>
+        </div>
+        <div class="fbb-price-info">
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">od 1. mies.</div>
+          </div>
+          <div class="fbb-divider"></div>
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">z rabatami, od 2. mies.</div>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#">Sprawdź dostępność</a>
+      </div>
+
+      <div class="fbb-card">
+        <div class="fbb-text-holder">
+          <div class="fbb-offer">
+            <div class="kicker">Extra TV z Amazon Prime</div>
+            <div class="title">230 kanałów</div>
+            <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+          </div>
+          <img class="fbb-plus" src="assets/icon-plus.svg" alt="+">
+          <div class="fbb-offer">
+            <div class="kicker">Światłowód</div>
+            <div class="title">do 600 Mb/s</div>
+          </div>
+        </div>
+        <div class="fbb-price-info">
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">od 1. mies.</div>
+          </div>
+          <div class="fbb-divider"></div>
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">z rabatami, od 2. mies.</div>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#">Sprawdź dostępność</a>
+      </div>
+
+      <div class="fbb-card">
+        <div class="fbb-text-holder">
+          <div class="fbb-offer">
+            <div class="kicker">Extra TV z Amazon Prime</div>
+            <div class="title">230 kanałów</div>
+            <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+          </div>
+          <img class="fbb-plus" src="assets/icon-plus.svg" alt="+">
+          <div class="fbb-offer">
+            <div class="kicker">Światłowód</div>
+            <div class="title">do 1 Gb/s</div>
+          </div>
+        </div>
+        <div class="fbb-price-info">
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">od 1. mies.</div>
+          </div>
+          <div class="fbb-divider"></div>
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">z rabatami, od 2. mies.</div>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#">Sprawdź dostępność</a>
+      </div>
+
+      <div class="fbb-card superoferta">
+        <div class="fbb-sticker"><span>Superoferta</span></div>
+        <div class="fbb-text-holder">
+          <div class="fbb-offer">
+            <div class="kicker">Extra TV z Amazon Prime</div>
+            <div class="title">230 kanałów</div>
+            <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+          </div>
+          <img class="fbb-plus" src="assets/icon-plus.svg" alt="+">
+          <div class="fbb-offer">
+            <div class="kicker">Światłowód</div>
+            <div class="title">do 8 Gb/s</div>
+          </div>
+        </div>
+        <div class="fbb-price-info">
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">od 1. mies.</div>
+          </div>
+          <div class="fbb-divider"></div>
+          <div class="fbb-price-row">
+            <div class="fbb-price-line"><span class="from">od</span><span class="amount">##,##</span><span class="unit">zł/mies.</span></div>
+            <div class="fbb-price-note">z rabatami, od 2. mies.</div>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#">Sprawdź dostępność</a>
       </div>
     </div>
   </div>
@@ -1012,6 +1170,14 @@ function selectCzas(event, el) {
   document.querySelectorAll('.dish-holder').forEach(function (panel) {
     panel.hidden = panel.id !== el.dataset.target;
   });
+}
+
+function toggleFiber(event) {
+  event.preventDefault();
+  var sw = document.getElementById('fiber-switch');
+  var isOn = sw.classList.toggle('on');
+  document.getElementById('standard-offers').hidden = isOn;
+  document.getElementById('fiber-offers').hidden = !isOn;
 }
 </script>
 </body>
