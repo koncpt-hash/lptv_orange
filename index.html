@@ -365,6 +365,7 @@ p { white-space: pre-wrap; }
 /* ===================== FBB (fiber) BUNDLE CARDS ===================== */
 .fbb-holder { width: 100%; display: flex; gap: 16px; align-items: flex-start; justify-content: center; }
 .fbb-holder[hidden] { display: none; }
+.fbb-holder.no-amazon .logo-holder-dish { display: none; }
 .fbb-card {
   flex: 1;
   max-width: 400px;
@@ -1169,6 +1170,8 @@ function selectCzas(event, el) {
   document.querySelectorAll('.dish-holder').forEach(function (panel) {
     panel.hidden = panel.id !== el.dataset.target;
   });
+
+  updateFiberLogos();
 }
 
 function toggleFiber(event) {
@@ -1177,6 +1180,14 @@ function toggleFiber(event) {
   var isOn = sw.classList.toggle('on');
   document.getElementById('standard-offers').hidden = isOn;
   document.getElementById('fiber-offers').hidden = !isOn;
+
+  updateFiberLogos();
+}
+
+function updateFiberLogos() {
+  var fiberOn = document.getElementById('fiber-switch').classList.contains('on');
+  var bezterminowo = document.querySelector('.option-radio.selected').dataset.target === 'dish-panel-bezterminowo';
+  document.getElementById('fiber-offers').classList.toggle('no-amazon', fiberOn && bezterminowo);
 }
 </script>
 </body>
