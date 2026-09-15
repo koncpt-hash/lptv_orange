@@ -318,6 +318,7 @@ p { white-space: pre-wrap; }
 .option-radio.selected { border-color: var(--border-active); }
 
 .dish-holder { width: 100%; display: flex; gap: 16px; align-items: flex-start; justify-content: center; padding-top: 0; }
+.dish-holder[hidden] { display: none; }
 .offer-dish {
   width: 400px;
   max-width: 400px;
@@ -651,12 +652,96 @@ p { white-space: pre-wrap; }
     <div class="czas">
       <h3>Czas trwania umowy</h3>
       <div class="czas-options">
-        <div class="option-radio selected"><span>24 miesiące</span></div>
-        <a class="option-radio" href="#"><span>Bezterminowo</span></a>
+        <a class="option-radio selected" href="#" data-target="dish-panel-24" onclick="selectCzas(event,this)"><span>24 miesiące</span></a>
+        <a class="option-radio" href="#" data-target="dish-panel-bezterminowo" onclick="selectCzas(event,this)"><span>Bezterminowo</span></a>
       </div>
     </div>
 
-    <div class="dish-holder">
+    <div class="dish-holder" id="dish-panel-24">
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Extra TV z Amazon Prime</div>
+          <div class="title">179 kanałów</div>
+          <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">60</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Wybierz</a>
+          <a class="btn btn-secondary" href="#">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="lead">Lorem ipsum:</div>
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Lorem ipsum</p>
+              <div class="btn-icon"><img src="assets/icon-dot.svg" alt=""></div>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-holder" id="dish-panel-bezterminowo" hidden>
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Extra TV z Amazon Prime</div>
+          <div class="title">179 kanałów</div>
+          <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">60</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Wybierz</a>
+          <a class="btn btn-secondary" href="#">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="lead">Lorem ipsum:</div>
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Lorem ipsum</p>
+              <div class="btn-icon"><img src="assets/icon-dot.svg" alt=""></div>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="offer-dish">
         <div class="offer-element">
           <div class="kicker">Extra TV z Amazon Prime</div>
@@ -916,5 +1001,18 @@ p { white-space: pre-wrap; }
   </div>
 
 </div>
+<script>
+function selectCzas(event, el) {
+  event.preventDefault();
+  document.querySelectorAll('.option-radio').forEach(function (opt) {
+    opt.classList.remove('selected');
+  });
+  el.classList.add('selected');
+
+  document.querySelectorAll('.dish-holder').forEach(function (panel) {
+    panel.hidden = panel.id !== el.dataset.target;
+  });
+}
+</script>
 </body>
 </html>
