@@ -322,30 +322,6 @@ p { white-space: pre-wrap; }
   justify-content: center;
   padding: 24px;
 }
-.login-card {
-  width: 400px;
-  max-width: 90%;
-  background: var(--bg-container);
-  border-radius: var(--rounded-standard);
-  box-shadow: var(--shadow-elevated);
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.login-card h2 { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold-default); }
-.login-card h3 { font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); color: var(--text-bold-default); }
-.login-field { display: flex; flex-direction: column; gap: 6px; border-bottom: 2px solid var(--border-input); padding-bottom: 8px; }
-.login-field label { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
-.login-field input { border: none; outline: none; font-size: var(--fs-base); font-family: var(--font); background: transparent; padding: 4px 0; }
-.login-row { display: flex; align-items: center; justify-content: space-between; }
-.login-checkbox { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-default); cursor: pointer; }
-.login-link { font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
-.login-card .btn-primary, .login-card .btn-secondary { width: 100%; }
-.login-divider { display: flex; align-items: center; gap: 12px; }
-.login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--border-divider); }
-.login-divider span { font-size: var(--fs-sm); color: var(--text-bold-light); }
-.login-back { text-align: center; font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
 .pakiety-header { text-align: center; width: 100%; }
 .pakiety-header h2 {
   font-family: "Helvetica Neue";
@@ -767,36 +743,7 @@ p { white-space: pre-wrap; }
   <div class="login-screen" id="login-screen" hidden>
     <div class="login-topbar"><img src="assets/content.svg" alt="Orange"></div>
     <div class="login-card-wrap">
-    <div class="login-card" id="login-card">
-      <h2>Zaloguj się i przejdź do Twoich spersonalizowanych ofert</h2>
-
-      <div class="login-field">
-        <label for="login-email">E-mail</label>
-        <input type="email" id="login-email">
-      </div>
-
-      <div class="login-field">
-        <label for="login-password">Hasło</label>
-        <input type="password" id="login-password">
-      </div>
-
-      <div class="login-row">
-        <label class="login-checkbox"><input type="checkbox" onclick="togglePasswordVisibility()"> Pokaż hasło</label>
-        <a class="login-link" href="#">Nie pamiętam hasła</a>
-      </div>
-
-      <a class="btn btn-primary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
-
-      <div class="login-divider"><span>lub</span></div>
-
-      <h3>Podaj numer i sprawdź dla niego ofertę</h3>
-
-      <a class="btn btn-secondary" href="#">Wpisz numer Orange</a>
-
-      <a class="login-back" href="#" onclick="closeLoginScreen(event)">Wróć</a>
-    </div>
-
-    <div class="pakiety-loader" id="login-loader" hidden>
+    <div class="pakiety-loader" id="login-loader">
       <div class="loader-icon"></div>
       <p>Daj nam chwilę - właśnie przygotowujemy oferty<br>tylko dla Ciebie!</p>
     </div>
@@ -1317,37 +1264,16 @@ function updateFiberLogos() {
 
 function openLoginScreen(event) {
   event.preventDefault();
-  document.getElementById('pakiety').hidden = true;
-  document.getElementById('login-screen').hidden = false;
-}
-
-function closeLoginScreen(event) {
-  event.preventDefault();
-  document.getElementById('login-screen').hidden = true;
-  document.getElementById('pakiety').hidden = false;
-}
-
-function handleLogin(event) {
-  event.preventDefault();
   var pakiety = document.getElementById('pakiety');
   var loginScreen = document.getElementById('login-screen');
-  var loginCard = document.getElementById('login-card');
-  var loginLoader = document.getElementById('login-loader');
 
-  loginCard.hidden = true;
-  loginLoader.hidden = false;
+  pakiety.hidden = true;
+  loginScreen.hidden = false;
 
   setTimeout(function () {
     loginScreen.hidden = true;
-    loginLoader.hidden = true;
-    loginCard.hidden = false;
     pakiety.hidden = false;
-  }, 2000);
-}
-
-function togglePasswordVisibility() {
-  var input = document.getElementById('login-password');
-  input.type = input.type === 'password' ? 'text' : 'password';
+  }, 4000);
 }
 </script>
 </body>
