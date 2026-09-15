@@ -260,6 +260,10 @@ p { white-space: pre-wrap; }
 .login-box .copy { flex: 1; font-size: var(--fs-sm); color: var(--text-bold-default); }
 .login-box .copy b { display: block; font-weight: 700; line-height: var(--lh-sm); }
 .login-box .copy .sub { font-weight: 500; line-height: var(--lh-sm); color: var(--text-bold-light); }
+.login-box .copy-loggedin { display: none; }
+body.logged-in .login-box .copy-anon { display: none; }
+body.logged-in .login-box .copy-loggedin { display: block; }
+body.logged-in .login-box .login-cta { display: none; }
 
 /* ===================== PAKIETY TV ===================== */
 .pakiety {
@@ -434,8 +438,8 @@ p { white-space: pre-wrap; }
 .promo-divider { width: 100%; max-width: 300px; height: 1px; background: var(--border-divider); }
 .promo-fineprint { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-align: center; }
 
-#pakiety.logged-in #dish-panel-24 .price-holder { display: none; }
-#pakiety.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
+body.logged-in #dish-panel-24 .price-holder { display: none; }
+body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
 
 .actions { display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 8px 0; width: 100%; }
 
@@ -762,11 +766,14 @@ p { white-space: pre-wrap; }
       <div style="height:8px;"></div>
       <div class="login-box-wrap">
         <div class="login-box">
-          <div class="copy">
+          <div class="copy copy-anon">
             <b>Masz już u nas abonament komórkowy albo internet mobilny?</b>
             <span class="sub">Zaloguj się i zobacz ceny przygotowane dla Ciebie</span>
           </div>
-          <a class="btn btn-tertiary" href="#" onclick="openLoginScreen(event)">Zaloguj się</a>
+          <div class="copy copy-loggedin">
+            <b>Cześć Konrad</b>
+          </div>
+          <a class="btn btn-tertiary login-cta" href="#" onclick="openLoginScreen(event)">Zaloguj się</a>
         </div>
       </div>
     </div>
@@ -1379,7 +1386,7 @@ function handleLogin(event) {
     loginLoader.hidden = true;
     loginCard.hidden = false;
     pakiety.hidden = false;
-    pakiety.classList.add('logged-in');
+    document.body.classList.add('logged-in');
   }, 4000);
 }
 
