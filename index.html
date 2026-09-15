@@ -424,6 +424,19 @@ p { white-space: pre-wrap; }
 .price-line .unit { font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-md); color: var(--text-bold-light); }
 .price-desc { font-weight: 700; font-size: var(--fs-xs); line-height: var(--lh-xs); color: var(--text-bold-light); text-align: center; }
 
+.promo-price-holder { display: none; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.promo-tier { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.promo-row { display: flex; align-items: baseline; gap: 4px; }
+.promo-old { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold-light); text-decoration: line-through; }
+.promo-amount { font-weight: 700; font-size: var(--fs-3xl); line-height: var(--lh-3xl); color: var(--text-active); }
+.promo-unit { font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-md); color: var(--text-bold-light); }
+.promo-period { font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); color: var(--text-bold-default); text-align: center; }
+.promo-divider { width: 100%; max-width: 300px; height: 1px; background: var(--border-divider); }
+.promo-fineprint { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-align: center; }
+
+#pakiety.logged-in #dish-panel-24 .price-holder { display: none; }
+#pakiety.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
+
 .actions { display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 8px 0; width: 100%; }
 
 .feature-list { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; width: 100%; }
@@ -843,6 +856,29 @@ p { white-space: pre-wrap; }
             <span class="amount">60</span>
             <span class="unit">zł/mies.</span>
           </div>
+        </div>
+
+        <div class="promo-price-holder">
+          <div class="promo-tier">
+            <div class="promo-row">
+              <span class="promo-amount">0</span>
+              <span class="promo-unit">zł/mies.</span>
+            </div>
+            <div class="promo-period">od 1. do 5. mies.</div>
+          </div>
+
+          <div class="promo-divider"></div>
+
+          <div class="promo-tier">
+            <div class="promo-row">
+              <span class="promo-old">60</span>
+              <span class="promo-amount">50</span>
+              <span class="promo-unit">zł/mies.</span>
+            </div>
+            <div class="promo-period">od 6. do 24. mies.</div>
+          </div>
+
+          <p class="promo-fineprint">Najniższa cena z 30 dni przed obniżką dla pierwszego numeru 80 zł/mies., a dla kolejnych numerów 40 zł/mies.; przy posiadaniu internetu odpowiednio 40 zł/mies. i 20 zł/mies.</p>
         </div>
 
         <div class="actions">
@@ -1343,6 +1379,7 @@ function handleLogin(event) {
     loginLoader.hidden = true;
     loginCard.hidden = false;
     pakiety.hidden = false;
+    pakiety.classList.add('logged-in');
   }, 4000);
 }
 
