@@ -291,6 +291,41 @@ p { white-space: pre-wrap; }
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
+
+.login-screen {
+  width: 100%;
+  min-height: 520px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+}
+.login-screen[hidden] { display: none; }
+.login-card {
+  width: 400px;
+  max-width: 90%;
+  background: var(--bg-container);
+  border-radius: var(--rounded-standard);
+  box-shadow: var(--shadow-elevated);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.login-card h2 { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold-default); }
+.login-card h3 { font-weight: 700; font-size: var(--fs-base); line-height: var(--lh-base); color: var(--text-bold-default); }
+.login-field { display: flex; flex-direction: column; gap: 6px; border-bottom: 2px solid var(--border-input); padding-bottom: 8px; }
+.login-field label { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
+.login-field input { border: none; outline: none; font-size: var(--fs-base); font-family: var(--font); background: transparent; padding: 4px 0; }
+.login-row { display: flex; align-items: center; justify-content: space-between; }
+.login-checkbox { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-default); cursor: pointer; }
+.login-link { font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
+.login-card .btn-primary, .login-card .btn-secondary { width: 100%; }
+.login-divider { display: flex; align-items: center; gap: 12px; }
+.login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--border-divider); }
+.login-divider span { font-size: var(--fs-sm); color: var(--text-bold-light); }
+.login-back { text-align: center; font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
 .pakiety-header { text-align: center; width: 100%; }
 .pakiety-header h2 {
   font-family: "Helvetica Neue";
@@ -697,7 +732,7 @@ p { white-space: pre-wrap; }
             <b>Masz już u nas abonament komórkowy albo internet mobilny?</b>
             <span class="sub">Zaloguj się i zobacz ceny przygotowane dla Ciebie</span>
           </div>
-          <a class="btn btn-tertiary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
+          <a class="btn btn-tertiary" href="#" onclick="openLoginScreen(event)">Zaloguj się</a>
         </div>
       </div>
     </div>
@@ -707,6 +742,37 @@ p { white-space: pre-wrap; }
   <div class="pakiety-loader" id="pakiety-loader" hidden>
     <div class="loader-icon"></div>
     <p>Daj nam chwilę - właśnie przygotowujemy oferty<br>tylko dla Ciebie!</p>
+  </div>
+
+  <div class="login-screen" id="login-screen" hidden>
+    <div class="login-card">
+      <h2>Zaloguj się i przejdź do Twoich spersonalizowanych ofert</h2>
+
+      <div class="login-field">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email">
+      </div>
+
+      <div class="login-field">
+        <label for="login-password">Hasło</label>
+        <input type="password" id="login-password">
+      </div>
+
+      <div class="login-row">
+        <label class="login-checkbox"><input type="checkbox" onclick="togglePasswordVisibility()"> Pokaż hasło</label>
+        <a class="login-link" href="#">Nie pamiętam hasła</a>
+      </div>
+
+      <a class="btn btn-primary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
+
+      <div class="login-divider"><span>lub</span></div>
+
+      <h3>Podaj numer i sprawdź dla niego ofertę</h3>
+
+      <a class="btn btn-secondary" href="#">Wpisz numer Orange</a>
+
+      <a class="login-back" href="#" onclick="closeLoginScreen(event)">Wróć</a>
+    </div>
   </div>
 
   <div class="pakiety" id="pakiety">
@@ -1221,16 +1287,35 @@ function updateFiberLogos() {
   document.getElementById('fiber-offers').classList.toggle('no-amazon', fiberOn && bezterminowo);
 }
 
+function openLoginScreen(event) {
+  event.preventDefault();
+  document.getElementById('pakiety').hidden = true;
+  document.getElementById('login-screen').hidden = false;
+}
+
+function closeLoginScreen(event) {
+  event.preventDefault();
+  document.getElementById('login-screen').hidden = true;
+  document.getElementById('pakiety').hidden = false;
+}
+
 function handleLogin(event) {
   event.preventDefault();
   var pakiety = document.getElementById('pakiety');
+  var loginScreen = document.getElementById('login-screen');
   var loader = document.getElementById('pakiety-loader');
+  loginScreen.hidden = true;
   pakiety.hidden = true;
   loader.hidden = false;
   setTimeout(function () {
     loader.hidden = true;
     pakiety.hidden = false;
   }, 2000);
+}
+
+function togglePasswordVisibility() {
+  var input = document.getElementById('login-password');
+  input.type = input.type === 'password' ? 'text' : 'password';
 }
 </script>
 </body>
