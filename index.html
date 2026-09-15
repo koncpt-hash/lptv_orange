@@ -270,6 +270,27 @@ p { white-space: pre-wrap; }
   gap: 16px;
   align-items: center;
 }
+.pakiety-loader {
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+.pakiety-loader[hidden] { display: none; }
+.pakiety-loader .loader-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--bg-brand);
+  animation: loader-pulse 1s ease-in-out infinite;
+}
+.pakiety-loader p { font-weight: 700; font-size: var(--fs-lg); line-height: var(--lh-lg); color: var(--text-bold-default); text-align: center; }
+@keyframes loader-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 .pakiety-header { text-align: center; width: 100%; }
 .pakiety-header h2 {
   font-family: "Helvetica Neue";
@@ -676,14 +697,19 @@ p { white-space: pre-wrap; }
             <b>Masz już u nas abonament komórkowy albo internet mobilny?</b>
             <span class="sub">Zaloguj się i zobacz ceny przygotowane dla Ciebie</span>
           </div>
-          <a class="btn btn-tertiary" href="#">Zaloguj się</a>
+          <a class="btn btn-tertiary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- PAKIETY TV -->
-  <div class="pakiety">
+  <div class="pakiety-loader" id="pakiety-loader" hidden>
+    <div class="loader-icon"></div>
+    <p>Daj nam chwilę - właśnie przygotowujemy oferty<br>tylko dla Ciebie!</p>
+  </div>
+
+  <div class="pakiety" id="pakiety">
     <div class="pakiety-header">
       <h2>Pakiety TV</h2>
       <p>Wybierz pakiet dopasowany do Twoich potrzeb</p>
@@ -1193,6 +1219,18 @@ function updateFiberLogos() {
   var fiberOn = document.getElementById('fiber-switch').classList.contains('on');
   var bezterminowo = document.querySelector('.option-radio.selected').dataset.target === 'dish-panel-bezterminowo';
   document.getElementById('fiber-offers').classList.toggle('no-amazon', fiberOn && bezterminowo);
+}
+
+function handleLogin(event) {
+  event.preventDefault();
+  var pakiety = document.getElementById('pakiety');
+  var loader = document.getElementById('pakiety-loader');
+  pakiety.hidden = true;
+  loader.hidden = false;
+  setTimeout(function () {
+    loader.hidden = true;
+    pakiety.hidden = false;
+  }, 2000);
 }
 </script>
 </body>
