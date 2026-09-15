@@ -291,13 +291,14 @@ p { white-space: pre-wrap; }
   align-items: center;
   padding: 12px 16px;
   border-radius: var(--rounded-small);
-  width: 400px;
+  width: 560px;
   cursor: pointer;
 }
 .toggle-bar .text-holder { flex: 1; text-align: left; }
 .toggle-bar .label { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
+.toggle-bar .details-row { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
 .toggle-bar .toggle-desc { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); }
-.toggle-bar .details { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-decoration: underline; }
+.toggle-bar .details { font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); text-decoration: underline; flex-shrink: 0; }
 .toggle-bar { cursor: pointer; }
 .switch { width: 48px; height: 28px; padding: 2px; border-radius: 24px; background: var(--bg-inactive); box-shadow: 0 0 0 rgba(241,94,0,0.2); display: flex; align-items: center; cursor: pointer; transition: background 0.15s ease; }
 .switch .knob { width: 24px; height: 24px; border-radius: 40px; background: var(--bg-light-100); transition: transform 0.15s ease; }
@@ -691,8 +692,10 @@ p { white-space: pre-wrap; }
     <div class="toggle-bar" onclick="toggleFiber(event)">
       <div class="text-holder">
         <div class="label">Światłowód</div>
-        <div class="toggle-desc">Internet + 230 kanałów z Extra TV</div>
-        <div class="details">Szczegóły</div>
+        <div class="details-row">
+          <div class="toggle-desc">Internet + 230 kanałów z Extra TV</div>
+          <div class="details">Szczegóły</div>
+        </div>
       </div>
       <div class="switch" id="fiber-switch"><div class="knob"></div></div>
     </div>
