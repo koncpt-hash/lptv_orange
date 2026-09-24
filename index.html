@@ -1846,7 +1846,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
         </div>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#" id="upsell-order-btn">Zamawiam</a>
+          <a class="btn btn-primary" href="#" id="upsell-order-btn" onclick="openUpsellCartScreen(event)">Zamawiam</a>
           <a class="btn btn-secondary" href="#" id="upsell-details-btn">Szczegóły</a>
         </div>
 
@@ -1893,7 +1893,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
         </div>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#">Zamawiam</a>
+          <a class="btn btn-primary" href="#" id="upsell-bez-start-order-btn" onclick="openUpsellCartScreen(event)">Zamawiam</a>
           <a class="btn btn-secondary" href="#">Szczegóły</a>
         </div>
 
@@ -1940,7 +1940,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
         </div>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#">Zamawiam</a>
+          <a class="btn btn-primary" href="#" id="upsell-bez-extra-order-btn" onclick="openUpsellCartScreen(event)">Zamawiam</a>
           <a class="btn btn-secondary" href="#">Szczegóły</a>
         </div>
 
@@ -2790,6 +2790,12 @@ function togglePasswordVisibility() {
 function openCartScreen(event) {
   event.preventDefault();
   screenHistory.push('pakiety');
+  document.getElementById('cart-screen').hidden = false;
+}
+
+function openUpsellCartScreen(event) {
+  event.preventDefault();
+  screenHistory.push('upsell-screen');
   document.getElementById('cart-screen').hidden = false;
 }
 
