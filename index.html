@@ -1554,20 +1554,66 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
               </div>
             </div>
           </div>
-          <div class="packages-item">
-            <div class="packages-item-text">
-              <p class="bold">Extra TV - na 24 miesiące i Amazon Prime w promocji</p>
-              <p class="muted">Pakiet kanałów telewizyjnych i Amazon Prime</p>
+          <div class="packages-item-wrap" id="extra-tv-24mies-wrap">
+            <div class="packages-item">
+              <div class="packages-item-text">
+                <p class="bold">Extra TV - na 24 miesiące i Amazon Prime w promocji</p>
+                <p class="muted">Pakiet kanałów telewizyjnych i Amazon Prime</p>
+              </div>
+              <div class="packages-item-cost">
+                <span class="label">Koszt</span>
+                <span class="value">45,00 zł/m-c</span>
+              </div>
+              <div class="packages-item-status">
+                <span class="label">Status</span>
+                <span class="value"><span class="dot off"></span>Wyłączony</span>
+              </div>
+              <a class="packages-chevron-btn" href="#" onclick="togglePackageDetails(event, 'extra-tv-24mies-wrap')"><span class="packages-chevron">⌄</span></a>
             </div>
-            <div class="packages-item-cost">
-              <span class="label">Koszt</span>
-              <span class="value">45,00 zł/m-c</span>
+
+            <div class="packages-detail" hidden>
+              <div class="packages-detail-meta">
+                <div class="packages-detail-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6" width="18" height="18"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  <div><span class="label">Ważność usługi</span><span class="value">bezterminowo</span></div>
+                </div>
+                <div class="packages-detail-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6" width="18" height="18"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.58 3.24L3 3v6.58c0 .53.21 1.04.59 1.42l9.58 9.58a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.83z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+                  <div><span class="label">Rodzaj usługi</span><span class="value">Cykliczna</span></div>
+                </div>
+              </div>
+
+              <h3>Opis</h3>
+              <p class="packages-detail-desc">Pakiet kanałów telewizyjnych, dodatkowy do usługi Start TV. Wymaga zawarcia odrębnej umowy. Zawiera kanały filmowe, informacyjne, ogólnotematyczne, rozrywkowe, sportowe, popularno-naukowe, muzyczne, obcojęzyczne i dla dzieci. Pełna lista kanałów. <a href="#">Sprawdź</a></p>
+
+              <p class="packages-detail-desc"><b>Dodatkowo Amazon Prime w promocji.</b> Zarejestruj konto w Amazon Prime i korzystaj z usługi.<br><a href="#">Dowiedz się więcej o Amazon Prime</a></p>
+
+              <p class="packages-detail-desc"><b>Opłaty miesięczne:</b><br>Od 1 do 24 mies.: 45,00 zł/mies.<br>Od 25 mies. abonament wzrośnie o 5 zł/mies. i po każdym kolejnym roku o następne 5 zł/mies.</p>
+
+              <p class="packages-detail-desc">Jeżeli chcesz korzystać z telewizji Extra TV, podpisz umowę.<br>Umowę do podpisu wyślemy e-mailem na Twój adres, a hasło do odczytu dokumentów SMS-em na podany numer telefonu. W tym celu potwierdź swoje dane do kontaktu. Możesz je później zmodyfikować.</p>
+
+              <div class="packages-detail-fields">
+                <div class="packages-detail-field">
+                  <label>Email do kontaktu <span class="req">*</span></label>
+                  <input type="email" value="mail@mail.com">
+                </div>
+                <div class="packages-detail-field">
+                  <label>Telefon kontaktowy <span class="req">*</span></label>
+                  <input type="text" value="519310814">
+                </div>
+              </div>
+
+              <p class="packages-detail-consent-label">Zgoda na rozpoczęcie świadczenia usługi oraz wykonanie usług instalatorskich (jeżeli były zamawiane) przed upływem 14 dni od zawarcia umowy <span class="req">*</span></p>
+              <div class="packages-detail-radios">
+                <label class="packages-radio"><input type="radio" name="extra-tv-24mies-consent"> Wyrażam zgodę</label>
+                <label class="packages-radio"><input type="radio" name="extra-tv-24mies-consent"> Nie wyrażam zgody</label>
+              </div>
+              <p class="packages-detail-fineprint">Jeżeli nie wyrazisz tej zgody, usługa oraz usługi instalatorskie (jeżeli były zamawiane) zostaną dostarczone po upływie 14 dni od zawarcia umowy</p>
+
+              <div class="packages-detail-footer">
+                <a class="ecare-primary-btn" href="#">Zamawiam i płacę</a>
+              </div>
             </div>
-            <div class="packages-item-status">
-              <span class="label">Status</span>
-              <span class="value"><span class="dot off"></span>Wyłączony</span>
-            </div>
-            <span class="packages-chevron">⌄</span>
           </div>
         </div>
       </div>
