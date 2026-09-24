@@ -347,6 +347,7 @@ body.logged-in .login-box .login-cta { display: none; }
 .login-checkbox { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-default); cursor: pointer; }
 .login-link { font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
 .login-card .btn-primary, .login-card .btn-secondary { width: 100%; }
+.login-hidden-link { display: block; width: 100%; height: 10px; }
 .login-divider { display: flex; align-items: center; gap: 12px; }
 .login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--border-divider); }
 .login-divider span { font-size: var(--fs-sm); color: var(--text-bold-light); }
@@ -936,6 +937,8 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
       </div>
 
       <a class="btn btn-primary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
+
+      <a class="login-hidden-link" href="#" aria-hidden="true"></a>
 
       <div class="login-divider"><span>lub</span></div>
 
