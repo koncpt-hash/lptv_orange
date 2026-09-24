@@ -347,6 +347,12 @@ body.logged-in .login-box .login-cta { display: none; }
 .login-checkbox { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-default); cursor: pointer; }
 .login-link { font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
 .login-card .btn-primary, .login-card .btn-secondary { width: 100%; }
+.btn-split { position: relative; }
+.btn-split-label { pointer-events: none; }
+.btn-split-zone { position: absolute; top: 0; bottom: 0; width: 33.3334%; }
+.btn-split-zone:nth-child(2) { left: 0; }
+.btn-split-zone:nth-child(3) { left: 33.3333%; }
+.btn-split-zone:nth-child(4) { left: 66.6666%; }
 .login-hidden-link { display: block; width: 100%; height: 5px; }
 .login-divider { display: flex; align-items: center; gap: 12px; }
 .login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--border-divider); }
@@ -936,7 +942,12 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
         <a class="login-link" href="#">Nie pamiętam hasła</a>
       </div>
 
-      <a class="btn btn-primary" href="#" onclick="handleLogin(event)">Zaloguj się</a>
+      <div class="btn btn-primary btn-split">
+        <span class="btn-split-label">Zaloguj się</span>
+        <a class="btn-split-zone" href="#" onclick="event.preventDefault()" aria-label="Strefa 1"></a>
+        <a class="btn-split-zone" href="#" onclick="event.preventDefault()" aria-label="Strefa 2"></a>
+        <a class="btn-split-zone" href="#" onclick="handleLogin(event)" aria-label="Strefa 3"></a>
+      </div>
 
       <a class="login-hidden-link" href="#" aria-hidden="true"></a>
       <a class="login-hidden-link" href="#" aria-hidden="true"></a>
