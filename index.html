@@ -358,6 +358,71 @@ body.logged-in .login-box .login-cta { display: none; }
 .login-divider span { font-size: var(--fs-sm); color: var(--text-bold-light); }
 .login-back { text-align: center; font-weight: 700; font-size: var(--fs-sm); color: var(--text-bold-default); text-decoration: underline; }
 
+/* ===================== TV CHOICE SCREEN ===================== */
+.tv-choice-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tv-choice-screen[hidden] { display: none; }
+.tv-choice-screen .menu { border-bottom: 1px solid var(--bg-bold-80); }
+.tv-choice-body {
+  width: 100%;
+  max-width: 1232px;
+  padding: 40px 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.tv-choice-body h2 {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-4xl);
+  color: var(--text-bold-default);
+}
+.tv-choice-cards { display: flex; gap: 16px; width: 100%; justify-content: center; }
+.tv-choice-card {
+  width: 600px;
+  background: var(--bg-container);
+  border: 2px solid var(--border-input);
+  border-radius: var(--rounded-standard);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tv-choice-sticker {
+  align-self: flex-start;
+  background: #b8ebd6;
+  color: var(--text-bold-default);
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-xs);
+  padding: 4px 8px;
+  border-radius: var(--rounded-small);
+}
+.tv-choice-text { display: flex; flex-direction: column; gap: 8px; }
+.tv-choice-title { font-weight: 700; font-size: var(--fs-xl); line-height: var(--lh-xl); color: var(--text-bold-default); }
+.tv-choice-sub { font-weight: 500; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-light); }
+.tv-choice-address-row { display: flex; align-items: center; gap: 8px; }
+.tv-choice-address { flex: 1; font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); }
+.tv-choice-change { background: var(--bg-ghost); font-weight: 700; font-size: var(--fs-sm); line-height: var(--lh-sm); color: var(--text-bold-default); padding: 6px 16px; border-radius: var(--rounded-small); }
+.tv-choice-btn {
+  display: flex; align-items: center; justify-content: center;
+  height: 46px; border: 2px solid var(--border-bold); border-radius: var(--rounded-standard);
+  font-weight: 700; font-size: var(--fs-base); color: var(--text-bold-default);
+}
+
 /* ===================== CART SCREEN ===================== */
 .cart-screen {
   position: fixed;
@@ -943,8 +1008,8 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
 
       <div class="btn btn-primary btn-split">
         <span class="btn-split-label">Zaloguj się</span>
-        <a class="btn-split-zone" href="#" onclick="event.preventDefault()" aria-label="Strefa 1"></a>
-        <a class="btn-split-zone" href="#" onclick="event.preventDefault()" aria-label="Strefa 2"></a>
+        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event)" aria-label="Strefa 1"></a>
+        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event)" aria-label="Strefa 2"></a>
         <a class="btn-split-zone" href="#" onclick="handleLogin(event)" aria-label="Strefa 3"></a>
       </div>
 
@@ -962,6 +1027,72 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
       <div class="loader-icon"></div>
       <p>Daj nam chwilę - właśnie przygotowujemy oferty<br>tylko dla Ciebie!</p>
     </div>
+    </div>
+  </div>
+
+  <div class="tv-choice-screen" id="tv-choice-screen" hidden>
+    <div class="menu">
+      <div class="menu-upper">
+        <div class="markets">
+          <div class="market active">Klienci indywidualni</div>
+          <div class="market">Firmy</div>
+          <div class="market">Duże firmy i instytucje</div>
+        </div>
+        <div class="menu-upper-right">
+          <div class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="5" r="2"/><path d="M12 8v6M12 14l-4 6M12 14l4 6M6 11h12"/></svg>
+            <span>Bez barier</span>
+          </div>
+          <div class="btn-login-wrap">
+            <a class="btn btn-primary-small" href="#">Zaloguj się</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-lower">
+        <div class="services">
+          <div class="logo-market"><img src="assets/content.svg" alt="Orange"></div>
+          <div class="service"><div class="uslugi"><span>Usługi komórkowe</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Internet</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Telewizja</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Smartfony i urządzenia</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Usługi i rozwiązania</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Pomoc i kontakt</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        </div>
+        <div class="right-side">
+          <div class="custom-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span>Szukaj</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tv-choice-body">
+      <h2>Gdzie chcesz oglądać telewizję?</h2>
+      <div class="tv-choice-cards">
+        <div class="tv-choice-card">
+          <span class="tv-choice-sticker">3 miesiące za 0 zł</span>
+          <div class="tv-choice-text">
+            <p class="tv-choice-title">Extra TV do światłowodu</p>
+            <p class="tv-choice-sub">Pod adresem:</p>
+          </div>
+          <div class="tv-choice-address-row">
+            <span class="tv-choice-address">Warszawa, Al. Jerozolimskie 102/3</span>
+            <a class="tv-choice-change" href="#">Zmień adres</a>
+          </div>
+          <a class="tv-choice-btn" href="#" onclick="event.preventDefault()">Wybierz</a>
+        </div>
+
+        <div class="tv-choice-card">
+          <span class="tv-choice-sticker">3 miesiące za 0 zł</span>
+          <div class="tv-choice-text">
+            <p class="tv-choice-title">Extra TV</p>
+            <p class="tv-choice-sub">Oglądasz niezależnie od adresu</p>
+          </div>
+          <a class="tv-choice-btn" href="#" onclick="event.preventDefault()">Wybierz</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1681,6 +1812,12 @@ function openCartScreen(event) {
 function closeCartScreen(event) {
   event.preventDefault();
   document.getElementById('cart-screen').hidden = true;
+}
+
+function openTvChoiceScreen(event) {
+  event.preventDefault();
+  document.getElementById('login-screen').hidden = true;
+  document.getElementById('tv-choice-screen').hidden = false;
 }
 </script>
 </body>
