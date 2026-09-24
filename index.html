@@ -546,6 +546,59 @@ body.logged-in .login-box .login-cta { display: none; }
 .packages-detail-footer { display: flex; justify-content: flex-end; }
 .packages-detail-footer .ecare-primary-btn { flex: none; padding: 0 24px; }
 
+/* ===================== UPSELL SCREEN (Teraz masz) ===================== */
+.upsell-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.upsell-screen[hidden] { display: none; }
+.upsell-screen .menu { width: 100%; }
+.upsell-screen > * { width: 100%; }
+
+.upsell-banner {
+  background: var(--bg-bold-100);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 104px;
+}
+.upsell-back-chevron {
+  width: 36px; height: 36px; border-radius: var(--rounded-small);
+  background: var(--bg-container); color: var(--text-bold-default);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.upsell-banner h1 { color: var(--text-light); font-weight: 700; font-size: var(--fs-2xl); line-height: var(--lh-2xl); }
+
+.upsell-info-wrap { background: var(--bg-bold-100); padding: 0 104px 24px; display: flex; justify-content: center; }
+.upsell-info-card {
+  width: 100%; max-width: 1232px;
+  background: var(--bg-container);
+  border-radius: var(--rounded-standard);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.upsell-info-card .bold { font-weight: 700; font-size: var(--fs-base); color: var(--text-bold-default); }
+.upsell-info-card .muted { font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-light); }
+.upsell-info-note { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: var(--fs-sm); color: var(--text-bold-default); padding-top: 4px; }
+.upsell-pakiety-wrap {
+  width: 100%;
+  padding: 24px 104px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
 .tv-choice-screen {
   position: fixed;
   inset: 0;
@@ -1197,8 +1250,8 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
 
       <div class="btn btn-primary btn-split" id="login-submit-btn">
         <span class="btn-split-label">Zaloguj się</span>
-        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event)" aria-label="Strefa 1" id="login-zone-1"></a>
-        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event)" aria-label="Strefa 2" id="login-zone-2"></a>
+        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event, 'zone1')" aria-label="Strefa 1" id="login-zone-1"></a>
+        <a class="btn-split-zone" href="#" onclick="openTvChoiceScreen(event, 'zone2')" aria-label="Strefa 2" id="login-zone-2"></a>
         <a class="btn-split-zone" href="#" onclick="handleLogin(event)" aria-label="Strefa 3" id="login-zone-3"></a>
       </div>
 
@@ -1688,7 +1741,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
             <span class="tv-choice-address" id="tv-choice-address">Warszawa, Al. Jerozolimskie 102/3</span>
             <a class="tv-choice-change" href="#" id="tv-choice-change-address-btn">Zmień adres</a>
           </div>
-          <a class="tv-choice-btn" href="#" onclick="openEcareScreen(event)" id="tv-choice-fiber-select-btn">Wybierz</a>
+          <a class="tv-choice-btn" href="#" onclick="selectFiberCard(event)" id="tv-choice-fiber-select-btn">Wybierz</a>
         </div>
 
         <div class="tv-choice-card" id="tv-choice-card-independent">
@@ -1698,6 +1751,202 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
             <p class="tv-choice-sub">Oglądasz niezależnie od adresu</p>
           </div>
           <a class="tv-choice-btn" href="#" onclick="openPakietyLoggedIn(event)" id="tv-choice-independent-select-btn">Wybierz</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upsell-screen" id="upsell-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
+    <div class="menu">
+      <div class="menu-upper">
+        <div class="markets">
+          <div class="market active">Klienci indywidualni</div>
+          <div class="market">Firmy</div>
+          <div class="market">Duże firmy i instytucje</div>
+        </div>
+        <div class="menu-upper-right">
+          <div class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="5" r="2"/><path d="M12 8v6M12 14l-4 6M12 14l4 6M6 11h12"/></svg>
+            <span>Bez barier</span>
+          </div>
+          <div class="btn-login-wrap">
+            <a class="btn btn-my-account" href="#" id="upsell-my-account-btn">Moje konto<img src="assets/arrow-down.svg" alt=""></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-lower">
+        <div class="services">
+          <div class="logo-market"><img src="assets/content.svg" alt="Orange"></div>
+          <div class="service"><div class="uslugi"><span>Usługi komórkowe</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Internet</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Telewizja</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Smartfony i urządzenia</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Usługi i rozwiązania</span><img src="assets/arrow-down.svg" alt=""></div></div>
+          <div class="service"><div class="uslugi"><span>Pomoc i kontakt</span><img src="assets/arrow-down.svg" alt=""></div></div>
+        </div>
+        <div class="right-side">
+          <div class="custom-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span>Szukaj</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="upsell-banner" id="upsell-banner">
+      <a class="upsell-back-chevron" href="#" onclick="goBack(event)" id="upsell-chevron-back">‹</a>
+      <h1>Teraz masz</h1>
+    </div>
+
+    <div class="upsell-info-wrap">
+      <div class="upsell-info-card" id="upsell-info-card">
+        <p class="bold">Światłowód do 600 Mb/s</p>
+        <p class="muted">Adres: Warszawa, Al. Jerozolimskie 102/3</p>
+        <div class="upsell-info-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#527edb" stroke-width="1.6" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Dokupujesz Extra TV do posiadanej usługi
+        </div>
+      </div>
+    </div>
+
+    <div class="upsell-pakiety-wrap" id="upsell-pakiety-wrap">
+    <div class="pakiety-header" id="upsell-pakiety-header">
+      <h2>Pakiety TV</h2>
+      <p>...</p>
+    </div>
+
+    <div class="czas" id="upsell-czas">
+      <h3>Czas trwania umowy</h3>
+      <div class="czas-options">
+        <a class="option-radio selected" href="#" onclick="event.preventDefault()" id="upsell-czas-24">
+          <span>24 miesiące</span>
+        </a>
+        <a class="option-radio" href="#" onclick="event.preventDefault()" id="upsell-czas-bezterminowo">
+          <span>Bezterminowo</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="dish-holder" id="upsell-dish-holder">
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Extra TV z Amazon Prime</div>
+          <div class="title">230 kanałów</div>
+          <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">45</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+          <div class="price-desc">opis...</div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#" id="upsell-order-btn">Zamawiam</a>
+          <a class="btn btn-secondary" href="#" id="upsell-details-btn">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="lead">Lorem ipsum:</div>
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Miejsce na marketingowy opis...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="why-orange-section" id="upsell-why-orange-section">
+      <div class="why-orange-list">
+        <div class="why-orange-hero">
+          <div class="why-orange-hero-bg"></div>
+          <div class="item-holder">
+            <h3>Telewizja Standalone</h3>
+            <div class="bullets">
+              <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Nawet 179 kanałów TV w pakiecie Orange, w tym Amazon Prime i Eleven Sports</p></div>
+              <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Kultowe seriale, hity filmowe i premiery prosto z kina dostępne w Amazon Prime, HBO, CANAL+ i Netflixie</p></div>
+              <div class="bullet-line"><div class="bullet-holder"><div class="bullet"></div></div><p>Jeszcze więcej sportu w jakości HD w Polsat Sport Premium</p></div>
+            </div>
+            <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+          </div>
+        </div>
+
+        <div class="why-orange-row">
+          <div class="why-orange-cards">
+            <div class="why-orange-card card-1">
+              <div class="item-holder">
+                <h4>Kino i sport na najwyższym poziomie. Teraz w pakiecie z ofertą telewizyjną.</h4>
+                <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+              </div>
+            </div>
+            <div class="why-orange-card card-2">
+              <img class="card-img" src="assets/image351.png" alt="">
+              <div class="item-holder">
+                <h4>Poznaj telewizję od Orange – nawet 179 kanałów TV i wiele więcej</h4>
+                <a class="btn btn-tertiary on-dark" href="#">Szczegóły</a>
+              </div>
+            </div>
+            <div class="why-orange-card card-3">
+              <img class="card-img" src="assets/rectangle1.png" alt="">
+              <div class="item-holder">
+                <h4>Masz pytania do oferty?</h4>
+                <div class="subtitle">Połącz się z konsultantem!</div>
+                <a class="btn btn-tertiary on-dark" href="#">Zamów rozmowę</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="articles-section" id="upsell-articles-section">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <h2>Twoja telewizja, twoja moc</h2>
+        </div>
+        <div class="divider-full"></div>
+      </div>
+      <div class="banner-cards">
+        <div class="banner-card">
+          <div class="thumb"><span class="sticker">Poradnik</span></div>
+          <div class="body">
+            <h3>Jak działa telewizja w Orange?</h3>
+            <p>Streaming, który nadąża za Tobą</p>
+            <a class="btn btn-tertiary" href="#">Sprawdź</a>
+          </div>
+        </div>
+        <div class="banner-card">
+          <div class="thumb"><span class="sticker">Poradnik</span></div>
+          <div class="body">
+            <h3>Kanały w Telewizji od Orange: jakie programy obejrzysz?</h3>
+            <p>Streaming, który nadąża za Tobą</p>
+            <a class="btn btn-tertiary" href="#">Sprawdź</a>
+          </div>
+        </div>
+        <div class="banner-card">
+          <div class="thumb"><span class="sticker">Poradnik</span></div>
+          <div class="body">
+            <h3>Jakie pakiety z telewizją znajdziesz w 2026 roku?</h3>
+            <p>Streaming, który nadąża za Tobą</p>
+            <a class="btn btn-tertiary" href="#">Sprawdź</a>
+          </div>
         </div>
       </div>
     </div>
@@ -2377,7 +2626,8 @@ function updateFiberLogos() {
 }
 
 var screenHistory = [];
-var ALL_SCREEN_IDS = ['pakiety', 'login-screen', 'tv-choice-screen', 'ecare-screen', 'packages-screen', 'cart-screen'];
+var tvChoiceSource = null;
+var ALL_SCREEN_IDS = ['pakiety', 'login-screen', 'tv-choice-screen', 'ecare-screen', 'packages-screen', 'cart-screen', 'upsell-screen'];
 
 function goBack(event) {
   event.preventDefault();
@@ -2436,11 +2686,20 @@ function closeCartScreen(event) {
   document.getElementById('cart-screen').hidden = true;
 }
 
-function openTvChoiceScreen(event) {
+function openTvChoiceScreen(event, source) {
   event.preventDefault();
+  tvChoiceSource = source || null;
   screenHistory.push('login-screen');
   document.getElementById('login-screen').hidden = true;
   document.getElementById('tv-choice-screen').hidden = false;
+}
+
+function selectFiberCard(event) {
+  if (tvChoiceSource === 'zone2') {
+    openUpsellScreen(event);
+  } else {
+    openEcareScreen(event);
+  }
 }
 
 function openEcareScreen(event) {
@@ -2448,6 +2707,13 @@ function openEcareScreen(event) {
   screenHistory.push('tv-choice-screen');
   document.getElementById('tv-choice-screen').hidden = true;
   document.getElementById('ecare-screen').hidden = false;
+}
+
+function openUpsellScreen(event) {
+  event.preventDefault();
+  screenHistory.push('tv-choice-screen');
+  document.getElementById('tv-choice-screen').hidden = true;
+  document.getElementById('upsell-screen').hidden = false;
 }
 
 function openPackagesScreen(event) {
