@@ -1820,16 +1820,16 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
     <div class="czas" id="upsell-czas">
       <h3>Czas trwania umowy</h3>
       <div class="czas-options">
-        <a class="option-radio selected" href="#" onclick="event.preventDefault()" id="upsell-czas-24">
+        <a class="option-radio selected" href="#" data-target="upsell-dish-panel-24" onclick="selectUpsellCzas(event, this)" id="upsell-czas-24">
           <span>24 miesiące</span>
         </a>
-        <a class="option-radio" href="#" onclick="event.preventDefault()" id="upsell-czas-bezterminowo">
+        <a class="option-radio" href="#" data-target="upsell-dish-panel-bezterminowo" onclick="selectUpsellCzas(event, this)" id="upsell-czas-bezterminowo">
           <span>Bezterminowo</span>
         </a>
       </div>
     </div>
 
-    <div class="dish-holder" id="upsell-dish-holder">
+    <div class="dish-holder" id="upsell-dish-panel-24">
       <div class="offer-dish">
         <div class="offer-element">
           <div class="kicker">Extra TV z Amazon Prime</div>
@@ -1848,6 +1848,100 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
         <div class="actions">
           <a class="btn btn-primary" href="#" id="upsell-order-btn">Zamawiam</a>
           <a class="btn btn-secondary" href="#" id="upsell-details-btn">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Newsy, kanały dla dzieci i rozrywka w jakości HD</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Sport na mistrzowskim poziomie z Eleven Sports</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Amazon Prime w prezencie na 24 miesiące</p>
+            </div>
+            <div class="offer-notification">
+              <div class="offer-notification-row">
+                <div class="offer-notification-pill"><img src="assets/logo-hbomax.svg" alt="HBO Max"></div>
+                <div class="offer-notification-pill"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+                <div class="offer-notification-pill"><img src="assets/logo-netflix.svg" alt="Netflix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-holder" id="upsell-dish-panel-bezterminowo" hidden>
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Start TV</div>
+          <div class="title">47 kanałów</div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">12</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Zamawiam</a>
+          <a class="btn btn-secondary" href="#">Szczegóły</a>
+        </div>
+
+        <div class="feature-list">
+          <div class="offer-feature">
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Newsy, kanały dla dzieci i rozrywka w jakości HD</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Sport na mistrzowskim poziomie z Eleven Sports</p>
+            </div>
+            <div class="feature-divider"></div>
+            <div class="feature-item">
+              <div class="dot-holder"><div class="dot"></div></div>
+              <p>Amazon Prime w prezencie na 24 miesiące</p>
+            </div>
+            <div class="offer-notification">
+              <div class="offer-notification-row">
+                <div class="offer-notification-pill"><img src="assets/logo-hbomax.svg" alt="HBO Max"></div>
+                <div class="offer-notification-pill"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+                <div class="offer-notification-pill"><img src="assets/logo-netflix.svg" alt="Netflix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-dish">
+        <div class="offer-element">
+          <div class="kicker">Extra TV z Amazon Prime</div>
+          <div class="title">230 kanałów</div>
+          <div class="logo-holder-dish"><img src="assets/amazon-prime.svg" alt="Amazon Prime"></div>
+        </div>
+
+        <div class="price-holder">
+          <div class="price-line">
+            <span class="amount">55</span>
+            <span class="unit">zł/mies.</span>
+          </div>
+          <div class="price-desc">opis...</div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Zamawiam</a>
+          <a class="btn btn-secondary" href="#">Szczegóły</a>
         </div>
 
         <div class="feature-list">
@@ -2613,6 +2707,18 @@ function selectCzas(event, el) {
   });
 
   updateFiberLogos();
+}
+
+function selectUpsellCzas(event, el) {
+  event.preventDefault();
+  ['upsell-czas-24', 'upsell-czas-bezterminowo'].forEach(function (id) {
+    document.getElementById(id).classList.remove('selected');
+  });
+  el.classList.add('selected');
+
+  ['upsell-dish-panel-24', 'upsell-dish-panel-bezterminowo'].forEach(function (id) {
+    document.getElementById(id).hidden = id !== el.dataset.target;
+  });
 }
 
 function toggleFiber(event) {
