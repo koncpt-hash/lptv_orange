@@ -298,6 +298,15 @@ body.logged-in .login-box .login-cta { display: none; }
   50% { opacity: 0.4; }
 }
 
+.screen-back-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70px;
+  height: 50px;
+  z-index: 2000;
+}
+
 .login-screen {
   position: fixed;
   inset: 0;
@@ -1165,6 +1174,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
   </div>
 
   <div class="login-screen" id="login-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
     <div class="login-topbar"><img src="assets/content.svg" alt="Orange"></div>
     <div class="login-card-wrap">
     <div class="login-card" id="login-card">
@@ -1210,6 +1220,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
   </div>
 
   <div class="ecare-screen" id="ecare-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
     <div class="ecare-header">
       <div class="ecare-topbar">
         <div class="ecare-toptabs">
@@ -1387,6 +1398,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
   </div>
 
   <div class="packages-screen" id="packages-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
     <div class="ecare-header">
       <div class="ecare-topbar">
         <div class="ecare-toptabs">
@@ -1625,6 +1637,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
   </div>
 
   <div class="tv-choice-screen" id="tv-choice-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
     <div class="menu">
       <div class="menu-upper">
         <div class="markets">
@@ -1691,6 +1704,7 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
   </div>
 
   <div class="cart-screen" id="cart-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
     <div class="cart-menu">
       <div class="cart-menu-content">
         <div class="cart-menu-left">
@@ -2362,8 +2376,21 @@ function updateFiberLogos() {
   document.getElementById('fiber-offers').classList.toggle('no-amazon', fiberOn && bezterminowo);
 }
 
+var screenHistory = [];
+var ALL_SCREEN_IDS = ['pakiety', 'login-screen', 'tv-choice-screen', 'ecare-screen', 'packages-screen', 'cart-screen'];
+
+function goBack(event) {
+  event.preventDefault();
+  var prevId = screenHistory.pop();
+  if (!prevId) return;
+  ALL_SCREEN_IDS.forEach(function (id) {
+    document.getElementById(id).hidden = (id !== prevId);
+  });
+}
+
 function openLoginScreen(event) {
   event.preventDefault();
+  screenHistory.push('pakiety');
   document.getElementById('pakiety').hidden = true;
   document.getElementById('login-screen').hidden = false;
 }
@@ -2400,6 +2427,7 @@ function togglePasswordVisibility() {
 
 function openCartScreen(event) {
   event.preventDefault();
+  screenHistory.push('pakiety');
   document.getElementById('cart-screen').hidden = false;
 }
 
@@ -2410,18 +2438,21 @@ function closeCartScreen(event) {
 
 function openTvChoiceScreen(event) {
   event.preventDefault();
+  screenHistory.push('login-screen');
   document.getElementById('login-screen').hidden = true;
   document.getElementById('tv-choice-screen').hidden = false;
 }
 
 function openEcareScreen(event) {
   event.preventDefault();
+  screenHistory.push('tv-choice-screen');
   document.getElementById('tv-choice-screen').hidden = true;
   document.getElementById('ecare-screen').hidden = false;
 }
 
 function openPackagesScreen(event) {
   event.preventDefault();
+  screenHistory.push('ecare-screen');
   document.getElementById('ecare-screen').hidden = true;
   document.getElementById('packages-screen').hidden = false;
 }
