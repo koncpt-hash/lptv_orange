@@ -2179,6 +2179,124 @@ body.logged-in #dish-panel-24 .promo-price-holder { display: flex; }
     </div>
   </div>
 
+  <div class="cart-screen" id="upsell-cart-screen" hidden>
+    <a class="screen-back-btn" href="#" onclick="goBack(event)" aria-label="Wstecz"></a>
+    <div class="cart-menu">
+      <div class="cart-menu-content">
+        <div class="cart-menu-left">
+          <div class="cart-logo-market">
+            <img src="assets/content.svg" alt="Orange" class="cart-logo">
+            <div class="cart-market-select">
+              <span>Klient indywidualny</span>
+              <img src="assets/arrow-down.svg" alt="">
+            </div>
+          </div>
+          <nav class="cart-nav-tabs">
+            <div class="cart-nav-tab">Oferta</div>
+            <div class="cart-nav-tab">Sklep</div>
+            <div class="cart-nav-tab">Пропозиція / Offer</div>
+            <div class="cart-nav-tab">Pomoc</div>
+            <div class="cart-nav-tab">Kontakt</div>
+          </nav>
+        </div>
+        <div class="cart-menu-right">
+          <div class="cart-menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span>Szukaj</span>
+          </div>
+          <div class="cart-menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <span>Zaloguj</span>
+          </div>
+          <div class="cart-menu-item">
+            <img class="cart" src="assets/koszyk.svg" alt="Koszyk">
+            <span>Koszyk</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-body">
+      <div class="cart-header">
+        <h2>Twój koszyk</h2>
+        <button class="btn btn-secondary cart-btn-small" onclick="closeUpsellCartScreen(event)" id="upsell-cart-clear-btn">Wyczyść koszyk</button>
+      </div>
+
+      <div class="cart-columns">
+        <div class="cart-main">
+          <div class="cart-item-card" id="upsell-cart-item-tv">
+            <div class="cart-item-header">
+              <span>Telewizja do światłowodu</span>
+              <button class="btn btn-secondary cart-btn-small" onclick="closeUpsellCartScreen(event)" id="upsell-cart-item-tv-remove-btn">Usuń</button>
+            </div>
+            <div class="cart-item-content">
+              <div class="cart-item-title-row">
+                <h3>Extra TV i Amazon Prime</h3>
+                <img class="cart-item-logo" src="assets/amazon-prime-square.svg" alt="Amazon Prime">
+              </div>
+              <div class="cart-divider"></div>
+              <ul class="cart-bullets">
+                <li>Umowa na 24 miesiące</li>
+                <li>179 kanałów</li>
+              </ul>
+              <div class="cart-divider"></div>
+              <div class="cart-fees">
+                <h4>Opłaty</h4>
+                <div class="cart-fee-line">
+                  <span>Od 1. do 24. miesiąca</span>
+                  <span>50 zł</span>
+                </div>
+                <div class="cart-fee-sub">
+                  <span>Extra TV</span>
+                  <span>50 zł</span>
+                </div>
+                <div class="cart-divider"></div>
+                <div class="cart-tip">
+                  <img src="assets/icon-assistance.svg" alt="">
+                  <span>Co po 24. miesiącu?</span>
+                  <button class="cart-expand" id="upsell-cart-item-tv-info-expand"><img src="assets/arrow-down.svg" alt=""></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-side">
+          <div class="cart-summary-card" id="upsell-cart-summary-card">
+            <h3>Podsumowanie opłat</h3>
+            <div class="cart-fee-line">
+              <span>Od 1. do 24. miesiąca</span>
+              <span>50 zł</span>
+              <img src="assets/arrow-down.svg" alt="">
+            </div>
+            <div class="cart-fee-sub">
+              <span>Extra TV i Amazon Prime</span>
+              <span>50 zł</span>
+            </div>
+            <div class="cart-divider"></div>
+            <div class="cart-tip">
+              <img src="assets/icon-assistance.svg" alt="">
+              <div class="cart-tip-text">
+                <b>Co po 24. miesiącu?</b>
+                <p>Wtedy kończą się Twoje umowy na <b>telewizję Extra TV</b> na czas określony. Zanim to się stanie, przypomnimy Ci, że zbliża się jej koniec. Będziesz mieć więc czas, by zapoznać się z ofertami promocyjnymi i zdecydować się na nową umowę. Jeśli nic nie zrobisz, Twoja umowa automatycznie przedłuży się na czas nieokreślony.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-voucher-box" id="upsell-cart-voucher-box">
+            <span>Masz kod rabatowy?</span>
+            <button class="cart-expand" id="upsell-cart-voucher-expand-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <button class="btn btn-secondary cart-footer-btn" onclick="closeUpsellCartScreen(event)" id="upsell-cart-back-to-shop-btn">Wróć do sklepu</button>
+      <a class="btn btn-primary cart-footer-btn" href="#" id="upsell-cart-order-btn">Zamawiam</a>
+    </div>
+  </div>
+
   <div class="pakiety" id="pakiety">
     <div class="pakiety-header" id="pakiety-header">
       <h2>Telewizja od Orange</h2>
@@ -2739,7 +2857,7 @@ function updateFiberLogos() {
 
 var screenHistory = [];
 var tvChoiceSource = null;
-var ALL_SCREEN_IDS = ['pakiety', 'login-screen', 'tv-choice-screen', 'ecare-screen', 'packages-screen', 'cart-screen', 'upsell-screen'];
+var ALL_SCREEN_IDS = ['pakiety', 'login-screen', 'tv-choice-screen', 'ecare-screen', 'packages-screen', 'cart-screen', 'upsell-screen', 'upsell-cart-screen'];
 
 function goBack(event) {
   event.preventDefault();
@@ -2796,7 +2914,12 @@ function openCartScreen(event) {
 function openUpsellCartScreen(event) {
   event.preventDefault();
   screenHistory.push('upsell-screen');
-  document.getElementById('cart-screen').hidden = false;
+  document.getElementById('upsell-cart-screen').hidden = false;
+}
+
+function closeUpsellCartScreen(event) {
+  event.preventDefault();
+  document.getElementById('upsell-cart-screen').hidden = true;
 }
 
 function closeCartScreen(event) {
