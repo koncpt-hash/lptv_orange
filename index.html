@@ -2937,7 +2937,7 @@ function selectFiberCard(event) {
   if (tvChoiceSource === 'zone2') {
     openUpsellScreen(event);
   } else {
-    openEcareScreen(event);
+    openPackagesScreenFromTvChoice(event);
   }
 }
 
@@ -2959,6 +2959,13 @@ function openPackagesScreen(event) {
   event.preventDefault();
   screenHistory.push('ecare-screen');
   document.getElementById('ecare-screen').hidden = true;
+  document.getElementById('packages-screen').hidden = false;
+}
+
+function openPackagesScreenFromTvChoice(event) {
+  event.preventDefault();
+  screenHistory.push('tv-choice-screen');
+  document.getElementById('tv-choice-screen').hidden = true;
   document.getElementById('packages-screen').hidden = false;
 }
 
